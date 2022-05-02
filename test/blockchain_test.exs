@@ -1,4 +1,4 @@
-defmodule BlockChainTest do
+defmodule BlockchainTest do
   use ExUnit.Case
   doctest Blockchain
 

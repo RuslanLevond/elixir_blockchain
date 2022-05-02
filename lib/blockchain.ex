@@ -51,15 +51,13 @@ defmodule Blockchain do
   end
 
   # Checks if two blocks are following each other.
-  defp valid_block?([%Block{prevhash: curr_block_prev_hash}, %Block{hash: last_block_hash}]) do
-    curr_block_prev_hash == last_block_hash
-  end
+  defp valid_block?([%Block{prevhash: hash}, %Block{hash: hash}]), do: true
 
   # When there is only one block (i.e. the last block), no need to check if it is in the chain because already has been checked.
   defp valid_block?([%Block{}]), do: true
 
-  # Checks if the hash changed on the block.
-  defp valid_hash?(%Block{hash: hash} = block), do: Block.generate_hash(block) == hash
+  defp valid_block?(_), do: false
 
-  # TODO: Have processes as nodes. When a node adds a transaction, it sends the transaction to every node on the network, which will store in the queue and eventually will add to their blockchain if valid.
+  # Checks if the hash changed on the block.
+  defp valid_hash?(%Block{hash: hash} = block), do: Block.generate_hash(block) == hash # TODO: Use constant check against timing attack.
 end

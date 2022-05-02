@@ -9,18 +9,24 @@ mix deps.get
 ## Running the library
 
 ```curl
-iex -S mix
+BLOCKCHAIN_PORT=4001 iex -S mix
 ```
 
 ## Functionality
 
 ```elixir
-# Create new blockchain with genesis block already created.
-blockchain = Blockchain.new()
-
 # Add transaction to the blockchain.
-blockchain = Blockchain.add_transaction(blockchain, "Bob pays Alice 1 BTC")
+Blockchain.Registry.add_transaction("Bob pays Alice 1 BTC")
 
-# Verify if the blockchain is valid.
-Blockchain.verify_chain?(blockchain)
+# Gets Blockchain stored in Registry.
+Blockchain.Registry.get_blockchain()
+
+# Send message to Blockchain's node, requires targetted node to be running and accepting TCP messages.
+Blockchain.Node.send_message('localhost', 4040, "Hello World")
+
+# Adds an node's IP address to the Router.
+Blockchain.Router.put('127.0.0.1', '4040')
+
+# Gets all stored IP addresses.
+Blockchain.Router.get_all()
 ```
